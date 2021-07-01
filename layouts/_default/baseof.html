@@ -11,9 +11,22 @@
     {{ $style := resources.Get "css/main.scss" | resources.ExecuteAsTemplate "css/main.scss" . | resources.ToCSS | resources.Minify | resources.Fingerprint -}}
     <link rel="stylesheet" href="{{ $style.Permalink }}" />
 
-    {{ template "_internal/google_analytics.html" . }}
+    <!-- {{ template "_internal/google_analytics.html" . }} -->
     {{ template "_internal/twitter_cards.html" . }}
     {{ template "_internal/opengraph.html" . }}
+
+    {{ if not .Site.IsServer }}
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-4W6XCC73C8"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config'
+      , 'G-4W6XCC73C8');
+    </script>
+    {{ end }}
 
   </head>
   <body>
